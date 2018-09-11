@@ -1,0 +1,7 @@
+<h1>Fruits.edit (/students/<%= student.id %>/edit)</h1>
+
+<form action="/students/<%= student.id %>/edit" method="post">
+	<input type="text" name="klass" value="<%= student.klass %>">
+	<input type="text" name="namn" value="<%= student.namn %>" /> 
+	<button type=submit>Update</button>
+</form>
