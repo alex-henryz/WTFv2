@@ -24,7 +24,9 @@ defmodule Pluggy.Student do
 	def create(params) do
 		klass = params["klass"]
 		namn = params["namn"]
-		Postgrex.query!(DB, "INSERT INTO students (klass, namn) VALUES ($1, $2)", [klass, namn], [pool: DBConnection.Poolboy])	
+		image = params["image"].filename
+		IO.inspect(image)
+		Postgrex.query!(DB, "INSERT INTO students (klass, namn, image) VALUES ($1, $2, $3)", [klass, namn, image], [pool: DBConnection.Poolboy])	
 	end
 
 	def delete(id) do

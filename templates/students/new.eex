@@ -3,5 +3,6 @@
 <form action="/students/" method="post" enctype="multipart/form-data">
 	<input type="text" placeholder="klass" name="klass" />
 	<input type="text" placeholder="namn" name="namn" />
+	<input type="file" name="image" />
 	<button type=submit>Create Student</button>
 </form>

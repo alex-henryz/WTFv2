@@ -28,7 +28,7 @@ defmodule Pluggy.StudentController do
   def create(conn, params) do
     Student.create(params)
     #move uploaded file from tmp-folder (might want to first check that a file was uploaded)
-    #File.rename(params["file"].path, "priv/static/uploads/#{params["file"].filename}")
+    File.rename(params["image"].path, "priv/static/uploads/#{params["image"].filename}")
     redirect(conn, "/students")
   end
 

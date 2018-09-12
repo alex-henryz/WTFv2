@@ -1,10 +1,11 @@
 <h1>Fruits.show (/students/<%= student.id %>)</h1>
 
 <h2>
+	<img src="/uploads/<%= student.image %>">
 	<a href="/students/<%= student.id %>/edit"><%= student.namn %></a>
 	<form action="/students/<%= student.id %>/destroy" method="post">
 		<button type="submit">Destroy Student</button>
 	</form>	
 </h2>
-<p>Name: <%= student.namn %>
+<p>Klass: <%= student.klass %>
 
