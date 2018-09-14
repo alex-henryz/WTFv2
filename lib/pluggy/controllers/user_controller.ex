@@ -8,18 +8,18 @@ defmodule Pluggy.UserController do
 		password = params["pwd"]
 
 		result =
-		  Postgrex.query!(DB, "SELECT id, password_hash FROM users WHERE username = $1", [username],
+		  Postgrex.query!(DB, "SELECT id, password_hash, type FROM users WHERE username = $1", [username],
 		    pool: DBConnection.Poolboy
-		  )
-
+			)
+		IO.inspect(result.rows)
 		case result.num_rows do
 		  0 -> #no user with that username
 		    redirect(conn, "/students")
 		  _ -> #user with that username exists
-		    [[id, password_hash]] = result.rows
+		    [[id, password_hash, type]] = result.rows
 
 		    #make sure password is correct
-		    if Bcrypt.verify_pass(password, password_hash) do
+		    if Bcrypt.verify_pass(password, password_hash) && type == 0 do
 		      Plug.Conn.put_session(conn, :user_id, id)
 		      |>redirect("/students")
 		    else
@@ -27,6 +27,73 @@ defmodule Pluggy.UserController do
 		    end
 		end
 	end
+
+	def register(conn, params) do
+		username = params["namn"]
+		password = params["pwd"]
+		confirm_password = params["confirm_pwd"]
+
+		result =
+		Postgrex.query!(DB, "SELECT id, password_hash FROM users WHERE username = $1", [username],
+			pool: DBConnection.Poolboy
+		)
+		case result.num_rows do
+			0 -> 
+				password_hash = Bcrypt.hash_pwd_salt(password)
+				Postgrex.query!(DB, "INSERT INTO users (username, password_hash, type) VALUES ($1, $2, 0)", [username, password_hash],
+					pool: DBConnection.Poolboy
+				)
+				redirect(conn, "/students")
+			_ -> #user with that username exists
+				redirect(conn, "/students")
+		end
+	end
+
+	def teacher_login(conn, params) do
+		username = params["username"]
+		password = params["pwd"]
+
+		result =
+		  Postgrex.query!(DB, "SELECT id, password_hash, type FROM users WHERE username = $1", [username],
+		    pool: DBConnection.Poolboy
+			)
+
+		case result.num_rows do
+		  0 -> #no user with that username
+		    redirect(conn, "/students")
+		  _ -> #user with that username exists
+		    [[id, password_hash, type]] = result.rows
+		    #make sure password is correct
+		    if Bcrypt.verify_pass(password, password_hash) && type == 1 do
+		      Plug.Conn.put_session(conn, :user_id, id)
+		      |>redirect("/students")
+		    else
+		      redirect(conn, "/students")
+		    end
+		end
+	end
+
+
+	def teacher_register(conn, params) do
+		username = params["namn"]
+		password = params["pwd"]
+
+		result =
+		Postgrex.query!(DB, "SELECT id, password_hash FROM users WHERE username = $1", [username],
+			pool: DBConnection.Poolboy
+		)
+		case result.num_rows do
+			0 -> 
+				password_hash = Bcrypt.hash_pwd_salt(password)
+				Postgrex.query!(DB, "INSERT INTO users (username, password_hash, type) VALUES ($1, $2, 1)", [username, password_hash],
+					pool: DBConnection.Poolboy
+				)
+				redirect(conn, "/students")
+			_ -> #user with that username exists
+				redirect(conn, "/students")
+		end
+	end
+
 
 	def logout(conn) do
 		Plug.Conn.configure_session(conn, drop: true)

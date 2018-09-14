@@ -2,6 +2,7 @@ defmodule Pluggy.Router do
   use Plug.Router
 
   alias Pluggy.StudentController
+  alias Pluggy.TeacherController
   alias Pluggy.UserController
 
   plug Plug.Static, at: "/", from: :pluggy
@@ -25,8 +26,10 @@ defmodule Pluggy.Router do
   get "/",                   do: StudentController.start(conn)
   get "/students",           do: StudentController.index(conn)
   get "/students/new",       do: StudentController.new(conn)
+  get "/students/login",     do: StudentController.login(conn)
   get "/students/:id",       do: StudentController.show(conn, id)
   get "/students/:id/edit",  do: StudentController.edit(conn, id)
+  #Denna kommer aldrig matchas utan kommer fångas upp av get på rad 29
   
   post "/students",          do: StudentController.create(conn, conn.body_params)
  
@@ -38,7 +41,15 @@ defmodule Pluggy.Router do
 
 
   post "/users/login",     do: UserController.login(conn, conn.body_params)
+  post "/users/register",  do: UserController.register(conn, conn.body_params)
   post "/users/logout",    do: UserController.logout(conn)
+  
+  get "/teachers",         do: TeacherController.index(conn)
+  get "/teachers/login",  do: TeacherController.login(conn)
+
+
+  post "/teachers/register",  do: UserController.teacher_register(conn, conn.body_params)
+  post "/teachers/login",  do: UserController.teacher_login(conn, conn.body_params)
 
   match _ do
     send_resp(conn, 404, "oops")

@@ -1,0 +1,5 @@
+<form action="/teachers/register" method="post" enctype="multipart/form-data">
+	<input type="text" placeholder="namn" name="namn" />
+	<input type="text" placeholder="lösenord" name="pwd" />
+	<button type=submit>Register</button>
+</form>

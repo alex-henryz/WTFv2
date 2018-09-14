@@ -5,8 +5,10 @@
               {modules,['Elixir.Pluggy','Elixir.Pluggy.Router',
                         'Elixir.Pluggy.Student',
                         'Elixir.Pluggy.StudentController',
-                        'Elixir.Pluggy.Supervisor','Elixir.Pluggy.Template',
-                        'Elixir.Pluggy.User','Elixir.Pluggy.UserController']},
+                        'Elixir.Pluggy.Supervisor','Elixir.Pluggy.Teacher',
+                        'Elixir.Pluggy.TeacherController',
+                        'Elixir.Pluggy.Template','Elixir.Pluggy.User',
+                        'Elixir.Pluggy.UserController']},
               {registered,[]},
               {vsn,"0.1.0"},
               {mod,{'Elixir.Pluggy',[]}}]}.

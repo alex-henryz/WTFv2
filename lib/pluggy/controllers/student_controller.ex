@@ -11,18 +11,14 @@ defmodule Pluggy.StudentController do
   def index(conn) do
 
     #get user if logged in
-    session_user = conn.private.plug_session["user_id"]
-    current_user = case session_user do
-      nil -> nil
-      _   -> User.get(session_user)
-    end
-
+    current_user = get_session(conn)
     send_resp(conn, 200, render("students/index", students: Student.all(), user: current_user))
   end
 
-  def start(conn),        do: send_resp(conn, 200, render("students/start", []))
+  def start(conn),        do: send_resp(conn, 200, render("students/start", user: get_session(conn)))
+  def login(conn),        do: send_resp(conn, 200, render("students/login", user: get_session(conn)))
   def new(conn),          do: send_resp(conn, 200, render("students/new", []))
-  def show(conn, id),     do: send_resp(conn, 200, render("students/show", student: Student.get(id)))
+  def show(conn, id),     do: send_resp(conn, 200, render("students/show", student: Student.get(id), user: get_session(conn)))
   def edit(conn, id),     do: send_resp(conn, 200, render("students/edit", student: Student.get(id)))
   
   def create(conn, params) do
@@ -46,4 +42,11 @@ defmodule Pluggy.StudentController do
     Plug.Conn.put_resp_header(conn, "location", url) |> send_resp(303, "")
   end
 
+  defp get_session(conn) do
+    session_user = conn.private.plug_session["user_id"]
+    current_user = case session_user do
+      nil -> nil
+      _   -> User.get(session_user)
+    end
+  end
 end

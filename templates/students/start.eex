@@ -1,2 +1,7 @@
 <h1>Whats Their Face!</h1>
-<a href="/students">Start</a>
+
+<h3>Teacher Login</h3>
+<button onclick="window.location.href='/teachers/login'">Login</button>
+
+<h3>Student Login</h3>
+<button onclick="window.location.href='/students/login'">Login</button>
