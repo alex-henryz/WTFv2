@@ -1,0 +1,22 @@
+<%= if user do %>
+	<form action="/users/logout" method="post">
+		<button type="submit">Log Out</button>
+	</form>
+<% else %>
+
+<form action="/teachers/login" method="post">
+	<label for="username">Username</label>
+	<input type="text" name="username" id="username" />
+	<label for="password">Password</lagel>
+	<input type="password" name="pwd" id="password" />
+	<button type="submit">Log In</button>
+</form>
+
+<form action="/teachers/register" method="post" enctype="multipart/form-data">
+	<input type="text" placeholder="username" name="namn" />
+	<input type="text" placeholder="password" name="pwd" />
+	<input type="text" placeholder="confirm password" name="confirm_pwd" />
+	<button type=submit>Register</button>
+</form>
+
+<% end %>

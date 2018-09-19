@@ -1,0 +1,18 @@
+<h1>Fruits.show (/students/<%= student.id %>)</h1>
+
+<h2>
+	<%= if student.image != nil do %>
+	<img src="/uploads/<%= student.image %>">
+	<%= else %>
+	<p>no image</p>
+	<% end %>
+	<a href="/students/<%= student.id %>/edit"><%= student.namn %></a>
+	<%= if user.type == 1 do %>
+	<form action="/students/<%= student.id %>/destroy" method="post">
+		<button type="submit">Destroy Student</button>
+	</form>
+	<% end %>
+</h2>
+
+<p>Klass: <%= student.klass %>
+

@@ -1,0 +1,23 @@
+<h1> Teacher site </h1>
+<h1>Students.index (/students)</h1>
+<%= if user do %>
+	<p>Logged in as: <%= user.username %></p>
+	<form action="/users/logout" method="post">
+		<button type="submit">Log Out</button>
+	</form>
+<% end %>
+
+<ul>
+  <%= for student <- students do %>
+    <li>
+    	<a href="/students/<%= student.id %>">
+			<%= student.klass %> - <%= student.namn %>
+		</a>
+	</li>
+  <% end %>
+</ul>
+<%= if user && user.type == 1 do %>
+<a href="/students/new">Add new student</a>
+<% end %>
+
+
